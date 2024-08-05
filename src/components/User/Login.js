@@ -8,6 +8,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
     const { setuser } = useContext(quizContext);
+    const [redirectPath, setRedirectPath] = useState('');
 
     async function loginUser(ev) {
         ev.preventDefault();
@@ -15,6 +16,7 @@ export default function Login() {
             const { data } = await axios.post('/login', { email, password });
             setuser(data);
             alert('Successfully logged in');
+             setRedirectPath(`/account/${data._id}`); 
             setRedirect(true);
         } catch (e) {
             alert('Login failed');
@@ -23,7 +25,7 @@ export default function Login() {
     }
 
     if (redirect) {
-        return <Navigate to={'/'} />;
+         return <Navigate to={redirectPath} />;
     }
 
     return (
