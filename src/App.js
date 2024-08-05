@@ -14,7 +14,7 @@ import axios from 'axios';
 import Profile from './components/User/Profile';
 import Dashboard from './components/User/Dashboard';
 
-axios.defaults.baseURL = "http://localhost:4001"
+axios.defaults.baseURL = "https://myquizserver.vercel.app"
 axios.defaults.withCredentials = true
 
 function App() {
