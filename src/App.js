@@ -13,6 +13,7 @@ import Signup from './components/User/Signup'
 import axios from 'axios';
 import Profile from './components/User/Profile';
 import Dashboard from './components/User/Dashboard';
+import Scorecards from './Scorecard';
 
 axios.defaults.baseURL = "https://myquizserver.vercel.app"
 axios.defaults.withCredentials = true
@@ -32,7 +33,7 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/Signup" element={<Signup />} />
             <Route path="/Profile" element={<Profile />} />
-            <Route path="/dashboard" element={<Dashboard />} />    
+            <Route path="/dashboard" element={<Scorecards />} />   
           </Routes>
         </div>
       </QuizState>
