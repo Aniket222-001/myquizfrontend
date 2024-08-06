@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect,useState,useRef } from 'react'
 import { useContext } from 'react'
 import './Scoreboard.css'
 import { AiOutlineHome, AiOutlineEye } from 'react-icons/ai'
@@ -6,13 +6,40 @@ import { BiReset } from 'react-icons/bi'
 import { BsShare } from 'react-icons/bs'
 import quizContext from '../../context/quizContext'
 import { Link as ReachLink } from 'react-router-dom'
+import axios from 'axios'
 
 const Scoreboard = (props) => {
     const context = useContext(quizContext)
-    const { setNext, setScore, setAnswerList } = context
+     const { setNext, setScore, setAnswerList,category,difficulty,type } = context
     const { total_que, correct_que, wrong_que } = props
     let percentage = (correct_que / total_que) * 100
     let Attempted = (correct_que + wrong_que) / total_que * 100
+    const [isScorePosted, setIsScorePosted] = useState(false);
+    const isScorePostingRef = useRef(false);
+
+    useEffect(() => {
+        if (!isScorePosted && !isScorePostingRef.current) {
+            isScorePostingRef.current = true;
+            axios.post('/postscore', {
+                percentage,
+                total_que,
+                wrong_que,
+                correct_que,
+                category,
+                difficulty,
+                type
+            })
+            .then(() => {
+                setIsScorePosted(true);
+                isScorePostingRef.current = false;
+            })
+            .catch((error) => {
+                console.error('Error posting score:', error);
+                isScorePostingRef.current = false;
+            });
+        }
+    }, [percentage, total_que, wrong_que, correct_que, category, difficulty, type, isScorePosted]);
+
 
     const handleGoHome = () => {
         window.location.reload()
