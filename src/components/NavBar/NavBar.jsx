@@ -59,7 +59,7 @@ export default function BetterNavbar() {
                 py={1}
                 rounded="md"
                 _hover={{ textDecoration: 'none' }}
-                to={user ? `/account/${user._id}` : '/login'}
+                to={user ? `/account/${user._id}` : '/'}
               >
                 <HStack>
                   <FaHome />
